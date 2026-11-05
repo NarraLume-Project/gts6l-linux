@@ -1,0 +1,23 @@
+# Logs and runtime dumps
+*.log
+*.tmp
+*.bak
+*~
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Editor & OS files
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Vendor firmware dumps (never commit extracted proprietary blobs)
+/etc/firmware/*.mbn
+/etc/firmware/*.bin
+/etc/firmware/*.fw
+!/etc/firmware/extract_firmware.sh
+!/etc/firmware/README.md

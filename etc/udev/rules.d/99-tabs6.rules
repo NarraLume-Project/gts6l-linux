@@ -1,0 +1,14 @@
+# Udev rules for Samsung Galaxy Tab S6 (SM-T865 / SM-T860)
+
+# Touchscreen and Digitizer input tags for Libinput / Wayland / X11
+ACTION=="add|change", KERNEL=="event*", ATTRS{name}=="fts_ts", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1", ENV{LIBINPUT_CALIBRATION_MATRIX}="1 0 0 0 1 0"
+ACTION=="add|change", KERNEL=="event*", ATTRS{name}=="Samsung Galaxy Tab S6 S-Pen Digitizer", ENV{ID_INPUT}="1", ENV{ID_INPUT_TABLET}="1"
+
+# Battery charger permissions for userspace charge daemon
+SUBSYSTEM=="power_supply", ATTR{type}=="Battery", MODE="0664", GROUP="power"
+
+# Adreno GPU render node permissions
+SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="render", MODE="0666"
+
+# IIO sensor proxy permissions
+SUBSYSTEM=="iio", KERNEL=="iio:device*", GROUP="input", MODE="0660"

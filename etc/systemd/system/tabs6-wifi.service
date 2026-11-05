@@ -1,0 +1,21 @@
+[Unit]
+ConditionPathExists=/etc/tabs6-enable-modem
+Description=Tab S6 Wi-Fi bring-up (WCN3990 via modem WLAN PD)
+Documentation=https://github.com
+After=network-pre.target rmtfs.service tqftpserv.service
+Requires=rmtfs.service tqftpserv.service
+Wants=NetworkManager.service
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStartPre=/sbin/modprobe qcom_q6v5_pas
+ExecStartPre=/sbin/modprobe qrtr-smd
+ExecStartPre=/sbin/modprobe rmtfs_mem
+ExecStartPre=/sbin/modprobe ath10k_snoc
+ExecStart=/bin/sh -c 'for r in /sys/class/remoteproc/remoteproc*; do [ -r "$r/name" ] || continue; if [ "$(cat "$r/name")" = "4080000.remoteproc" ]; then echo disabled > "$r/recovery" 2>/dev/null || true; grep -q offline "$r/state" && echo start > "$r/state"; break; fi; done'
+ExecStartPost=/bin/sh -c 'for i in $(seq 1 40); do ls -d /sys/class/ieee80211/phy* >/dev/null 2>&1 && exit 0; sleep 1; done; exit 0'
+
+[Install]
+WantedBy=multi-user.target

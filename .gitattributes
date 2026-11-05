@@ -1,0 +1,7 @@
+# Git LFS configuration for binary release artifacts
+*.img filter=lfs diff=lfs merge=lfs -text
+*.tar.md5 filter=lfs diff=lfs merge=lfs -text
+*.tar.gz filter=lfs diff=lfs merge=lfs -text
+*.bin filter=lfs diff=lfs merge=lfs -text
+*.fd filter=lfs diff=lfs merge=lfs -text
+Image filter=lfs diff=lfs merge=lfs -text
